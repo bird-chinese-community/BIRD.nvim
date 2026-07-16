@@ -159,23 +159,18 @@ local protocols = {
 
 local table_types = {
   aspa = true,
+  eth = true,
   evpn = true,
   flow4 = true,
   flow6 = true,
   ipv4 = true,
-  ["ipv4-mpls"] = true,
   ipv6 = true,
-  ["ipv6-mpls"] = true,
-  ["ipv6-sadr"] = true,
   mpls = true,
+  neighbor = true,
   roa4 = true,
   roa6 = true,
   vpn4 = true,
-  ["vpn4-mc"] = true,
-  ["vpn4-mpls"] = true,
   vpn6 = true,
-  ["vpn6-mc"] = true,
-  ["vpn6-mpls"] = true,
 }
 
 local policy_values = { all = true, filter = true, none = true, where = true }
@@ -221,7 +216,11 @@ local function is_strong_signal(line)
     return true
   end
 
-  local table_type = line:match("^%s*([%w_-]+)%s+table%f[%W]")
+  if line:match("^%s*ipv6%s+sadr%s+table%f[%W]") then
+    return true
+  end
+
+  local table_type = line:match("^%s*([%w_]+)%s+table%f[%W]")
   return table_type ~= nil and table_types[table_type] == true
 end
 

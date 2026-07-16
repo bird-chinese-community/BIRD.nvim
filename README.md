@@ -72,12 +72,15 @@ Choose your preferred plugin manager:
 ```lua
 {
   "bird-chinese-community/BIRD2.nvim",
-  ft = "bird2",
+  lazy = false,
   config = function()
     require("bird2").setup()
   end,
 }
 ```
+
+The plugin must load before filetype detection runs; using `ft = "bird2"` alone
+creates a detection/loading cycle for BIRD-specific filenames.
 
 ### Using pack.nvim
 

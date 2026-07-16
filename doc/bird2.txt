@@ -37,12 +37,15 @@ LAZY.NVIM ~
 	Add this plugin spec to your lazy.nvim configuration: >
 		{
 		  "bird-chinese-community/bird2.nvim",
-		  ft = "bird2",
+		  lazy = false,
 		  config = function()
 		    require("bird2").setup()
 		  end
 		}
 <
+
+	The plugin must load before it can register BIRD filetype detection.
+	Avoid using only `ft = "bird2"` for lazy-loading.
 
 PACKER.NVIM ~
 

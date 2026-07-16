@@ -40,7 +40,10 @@ end
 
 check_heuristic({ "protocol evpn fabric {" }, true, "EVPN protocol")
 check_heuristic({ "protocol aggregator routes {" }, true, "aggregator protocol")
-check_heuristic({ "ipv6-sadr table source_specific;" }, true, "typed table")
+check_heuristic({ "ipv6 sadr table source_specific;" }, true, "source-specific table")
+check_heuristic({ "eth table layer2_routes;" }, true, "Ethernet table")
+check_heuristic({ "neighbor table peers;" }, true, "neighbor table")
+check_heuristic({ "ipv4-mpls table labels;" }, false, "address-family label is not a table type")
 check_heuristic({ "table users {" }, false, "one generic table")
 check_heuristic({ "filter inbound {", "  export all;" }, true, "two policy signals")
 check_heuristic({ "/* protocol bgp hidden { */", "ordinary text" }, false, "block comments")

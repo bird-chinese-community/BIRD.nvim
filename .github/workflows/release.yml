@@ -1,11 +1,10 @@
-# bird2.vim GitHub Actions Release Workflow
+# BIRD2.nvim GitHub Actions Release Workflow
 name: Release
 
 on:
   push:
     tags:
-      - "vim-v*.*.*"
-  workflow_dispatch:
+      - "nvim-v*.*.*"
 
 permissions:
   contents: write
@@ -24,39 +23,33 @@ jobs:
       - name: Extract version from tag
         id: version
         run: |
-          TAG=${{ github.ref_name }}
-          VERSION=${TAG#vim-v}
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo "tag_name=$TAG" >> $GITHUB_OUTPUT
+          TAG="${{ github.ref_name }}"
+          VERSION=${TAG#nvim-v}
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag_name=$TAG" >> "$GITHUB_OUTPUT"
           echo "Version: $VERSION"
 
       - name: Generate release notes
         id: release_notes
         run: |
-          VERSION="${{ steps.version.outputs.version }}"
           cat > release_notes.md << 'EOF'
-          ## bird2.vim ${{ steps.version.outputs.version }}
+          ## BIRD2.nvim ${{ steps.version.outputs.version }}
 
           ### Changes
-          See [CHANGELOG.md](https://github.com/bird-chinese-community/bird2.vim/blob/main/CHANGELOG.md) for details.
+          See the [commit history](https://github.com/bird-chinese-community/BIRD2.nvim/commits/${{ steps.version.outputs.tag_name }}) for details.
 
           ### Installation
 
-          Using vim-plug:
-          ```vim
-          Plug 'bird-chinese-community/bird2.vim', { 'tag': '${{ steps.version.outputs.tag_name }}' }
-          ```
-
-          Using Vundle:
-          ```vim
-          Plugin 'bird-chinese-community/bird2.vim'
-          ```
-
-          Manual installation:
-          ```bash
-          git clone --branch ${{ steps.version.outputs.tag_name }} https://github.com/bird-chinese-community/bird2.vim.git
-          cd bird2.vim
-          bash scripts/install.sh
+          Using lazy.nvim:
+          ```lua
+          {
+            "bird-chinese-community/BIRD2.nvim",
+            tag = "${{ steps.version.outputs.tag_name }}",
+            lazy = false,
+            config = function()
+              require("bird2").setup()
+            end,
+          }
           ```
           EOF
           cat release_notes.md
@@ -65,7 +58,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.version.outputs.tag_name }}
-          name: bird2.vim ${{ steps.version.outputs.version }}
+          name: BIRD2.nvim ${{ steps.version.outputs.version }}
           body_path: release_notes.md
           draft: false
           prerelease: false

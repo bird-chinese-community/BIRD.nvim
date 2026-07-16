@@ -15,7 +15,7 @@ on:
       - ".gitmodules"
       - ".luacheckrc"
       - ".stylua.toml"
-      - ".github/workflows/ci.yml"
+      - ".github/workflows/**"
   pull_request:
     branches: ["main"]
     paths:
@@ -30,7 +30,7 @@ on:
       - ".gitmodules"
       - ".luacheckrc"
       - ".stylua.toml"
-      - ".github/workflows/ci.yml"
+      - ".github/workflows/**"
   workflow_dispatch:
 
 permissions:

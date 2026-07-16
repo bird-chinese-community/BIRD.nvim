@@ -72,12 +72,14 @@ Version: [English](README.md) | 简体中文
 ```lua
 {
   "bird-chinese-community/BIRD2.nvim",
-  ft = "bird2",
+  lazy = false,
   config = function()
     require("bird2").setup()
   end,
 }
 ```
+
+插件需要在文件类型检测前加载；仅使用 `ft = "bird2"` 会让 BIRD 专用文件名形成检测与加载的循环依赖。
 
 ### 使用 pack.nvim
 
