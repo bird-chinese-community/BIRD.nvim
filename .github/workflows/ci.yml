@@ -65,7 +65,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: JohnnyMorganz/stylua-action@v4
+      - uses: JohnnyMorganz/stylua-action@v5
         with:
-          version: latest
+          token: ${{ secrets.GITHUB_TOKEN }}
+          version: 2.5.2
           args: --check lua plugin ftplugin tests/headless.lua tests/minimal_init.lua
