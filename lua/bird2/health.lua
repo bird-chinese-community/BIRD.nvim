@@ -19,7 +19,7 @@ function M.check()
   if syntax_path and vim.fn.filereadable(syntax_path) == 1 then
     vim.health.ok("Syntax file found: " .. syntax_path)
   else
-    vim.health.error("Syntax file not found: " .. syntax_path)
+    vim.health.error("Syntax file not found: " .. (syntax_path or "syntax/bird2.vim"))
   end
 
   -- Check Lua version

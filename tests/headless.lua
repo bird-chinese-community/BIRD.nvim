@@ -91,6 +91,9 @@ local syntax_buffer = new_buffer({
   "local_metric = bgp_unknown_0x2a;",
   "proto_protocol_type = AF_IPV6;",
   "kbr_source = KBR_SRC_DYNAMIC;",
+  "if bt_check_assign(net, 1) then accept;",
+  "route net = 10.0.0.0/8{16,24};",
+  "route net = ::/0;",
 })
 vim.cmd("runtime! syntax/bird2.vim")
 
@@ -109,10 +112,15 @@ equal("bird2RouteAttr", syntax_group(4, "bgp_unknown_0x2a"), "unknown BGP attr s
 equal("bird2RuntimeAttr", syntax_group(5, "proto_protocol_type"), "runtime attr syntax")
 equal("bird2AddressFamilyConst", syntax_group(5, "AF_IPV6"), "address family syntax")
 equal("bird2BridgeSourceConst", syntax_group(6, "KBR_SRC_DYNAMIC"), "bridge source syntax")
+equal("bird2BuiltinFunc", syntax_group(7, "bt_check_assign"), "BIRD test builtin syntax")
+equal("bird2Prefix", syntax_group(8, "{16,24}"), "IPv4 prefix range suffix syntax")
+equal("bird2Prefix", syntax_group(9, "::/0"), "compressed IPv6 prefix syntax")
 
+vim.bo[syntax_buffer].formatoptions = "tcqj"
 bird2.on_attach(syntax_buffer)
 local first_formatoptions = vim.bo[syntax_buffer].formatoptions
 local first_matchpairs = vim.bo[syntax_buffer].matchpairs
+falsy(first_formatoptions:find("t", 1, true), "disable automatic text wrapping")
 bird2.on_attach(syntax_buffer)
 equal(first_formatoptions, vim.bo[syntax_buffer].formatoptions, "idempotent format options")
 equal(first_matchpairs, vim.bo[syntax_buffer].matchpairs, "idempotent matchpairs")
@@ -129,5 +137,43 @@ equal(false, vim.b[mapped].bird2_enabled, "buffer command disables actions")
 vim.cmd("Bird2 enable")
 equal(true, vim.b[mapped].bird2_enabled, "buffer command enables actions")
 delete_buffer(mapped)
+
+local commented = new_buffer({ "  # indented", "    # nested" }, "/tmp/commented.bird")
+vim.b[commented].bird2_enabled = true
+vim.api.nvim_win_set_cursor(0, { 1, 0 })
+bird2._toggle_comment()
+equal("  indented", vim.api.nvim_get_current_line(), "normal uncomment preserves indentation")
+bird2._toggle_comment()
+equal("  # indented", vim.api.nvim_get_current_line(), "normal recomment preserves indentation")
+vim.api.nvim_buf_set_mark(commented, "<", 1, 0, {})
+vim.api.nvim_buf_set_mark(commented, ">", 2, 0, {})
+bird2._toggle_comment_visual()
+truthy(
+  vim.deep_equal({ "  indented", "    nested" }, vim.api.nvim_buf_get_lines(commented, 0, -1, false)),
+  "visual uncomment"
+)
+delete_buffer(commented)
+
+local original_runtime_file = vim.api.nvim_get_runtime_file
+local original_health = vim.health
+local health_errors = {}
+vim.api.nvim_get_runtime_file = function()
+  return {}
+end
+vim.health = {
+  start = function() end,
+  ok = function() end,
+  warn = function() end,
+  info = function() end,
+  error = function(message)
+    table.insert(health_errors, message)
+  end,
+}
+local health_ok, health_error = pcall(require("bird2.health").check)
+vim.api.nvim_get_runtime_file = original_runtime_file
+vim.health = original_health
+truthy(health_ok, "health check tolerates missing syntax")
+equal(nil, health_error, "missing syntax health error")
+equal("Syntax file not found: syntax/bird2.vim", health_errors[1], "missing syntax message")
 
 vim.cmd("qa!")

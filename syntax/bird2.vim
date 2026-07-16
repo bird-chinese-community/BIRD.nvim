@@ -77,8 +77,8 @@ syn match  bird2ASN        "\<[0-9]\+\>" contained
 " Prefixes (repository.prefixes)
 " ------------------------
 syn match  bird2Prefix     "\<[0-9]\{1,3}\.[0-9]\{1,3}\.[0-9]\{1,3}\.[0-9]\{1,3}\/[0-9]\{1,2}\>\%([\+\-]\)\?"
-syn match  bird2Prefix     "\<[0-9a-fA-F:]\+\/[0-9]\{1,3}\>\%([\+\-]\)\?"
-syn match  bird2Prefix     "\<[0-9]\{1,3}\.[0-9]\{1,3}\.[0-9]\{1,3}\.[0-9]\{1,3}\/[0-9]\{1,2}{[0-9]\+,[0-9]\+}\>"
+syn match  bird2Prefix     "\%([0-9A-Za-z_:]\)\@<!\%([0-9a-fA-F]\{0,4}:\)\{1,7}[0-9a-fA-F]\{0,4}\/[0-9]\{1,3}\>\%([\+\-]\)\?"
+syn match  bird2Prefix     "\<[0-9]\{1,3}\.[0-9]\{1,3}\.[0-9]\{1,3}\.[0-9]\{1,3}\/[0-9]\{1,2}\>{[0-9]\+,[0-9]\+}"
 
 " ------------------------
 " Filter Definitions (repository.filter-definitions)
@@ -232,7 +232,7 @@ syn keyword bird2SemanticModifier self on off remote extended native ipv6 intern
 " ------------------------
 " Built-in Functions (repository.builtin-functions)
 " ------------------------
-syn keyword bird2BuiltinFunc defined unset roa_check aspa_check aspa_check_downstream aspa_check_upstream from_hex format append prepend add delete empty reset bt_assert bt_test_suite bt_test_same
+syn keyword bird2BuiltinFunc defined unset roa_check aspa_check aspa_check_downstream aspa_check_upstream from_hex format append prepend add delete empty reset bt_assert bt_check_assign bt_test_suite bt_test_same
 
 " ------------------------
 " Method Properties (repository.method-properties)

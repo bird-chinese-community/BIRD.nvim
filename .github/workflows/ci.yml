@@ -8,7 +8,11 @@ on:
       - "plugin/**"
       - "ftplugin/**"
       - "syntax/**"
+      - "shared/bird2.vim"
+      - "shared/**"
+      - "scripts/**"
       - "tests/**"
+      - ".gitmodules"
       - ".luacheckrc"
       - ".stylua.toml"
       - ".github/workflows/ci.yml"
@@ -19,7 +23,11 @@ on:
       - "plugin/**"
       - "ftplugin/**"
       - "syntax/**"
+      - "shared/bird2.vim"
+      - "shared/**"
+      - "scripts/**"
       - "tests/**"
+      - ".gitmodules"
       - ".luacheckrc"
       - ".stylua.toml"
       - ".github/workflows/ci.yml"
@@ -38,6 +46,8 @@ jobs:
         neovim: ["v0.9.5", "stable"]
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
       - uses: rhysd/action-setup-vim@v1
         with:
           version: ${{ matrix.neovim }}
@@ -46,6 +56,8 @@ jobs:
         run: nvim --headless -u tests/minimal_init.lua -l tests/headless.lua
       - name: Source Vim syntax mirror
         run: nvim --headless -u NONE -c 'source syntax/bird2.vim' -c 'qa!'
+      - name: Verify Vim syntax mirror
+        run: cmp syntax/bird2.vim shared/bird2.vim/syntax/bird2.vim
 
   lua-lint:
     name: Lua lint

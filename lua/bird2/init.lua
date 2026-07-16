@@ -53,7 +53,7 @@ function M.on_attach(bufnr)
   vim.bo[bufnr].comments = ":#"
 
   -- Set buffer-local options without duplicating flags on repeated attaches.
-  local formatoptions = vim.bo[bufnr].formatoptions
+  local formatoptions = vim.bo[bufnr].formatoptions:gsub("t", "")
   for flag in ("croql"):gmatch(".") do
     if not formatoptions:find(flag, 1, true) then
       formatoptions = formatoptions .. flag
@@ -99,7 +99,7 @@ function M._toggle_comment(_)
 
   if trimmed:match("^#") then
     -- Uncomment
-    local uncommented = line:gsub("^%s*#%s?", "", 1)
+    local uncommented = line:gsub("^(%s*)#%s?", "%1", 1)
     vim.api.nvim_set_current_line(uncommented)
   else
     -- Comment
@@ -125,7 +125,7 @@ function M._toggle_comment_visual()
 
     if trimmed:match("^#") then
       -- Uncomment
-      local uncommented = line:gsub("^%s*#%s?", "", 1)
+      local uncommented = line:gsub("^(%s*)#%s?", "%1", 1)
       vim.api.nvim_buf_set_lines(0, row - 1, row, false, { uncommented })
     else
       -- Comment
