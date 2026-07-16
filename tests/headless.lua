@@ -1,0 +1,133 @@
+local bird2 = require("bird2")
+
+local function equal(expected, actual, label)
+  if actual ~= expected then
+    error(string.format("%s: expected %s, got %s", label, vim.inspect(expected), vim.inspect(actual)))
+  end
+end
+
+local function truthy(value, label)
+  equal(true, not not value, label)
+end
+
+local function falsy(value, label)
+  equal(false, not not value, label)
+end
+
+local function new_buffer(lines, filename)
+  local buffer = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_set_current_buf(buffer)
+  vim.api.nvim_buf_set_lines(buffer, 0, -1, false, lines)
+  if filename then
+    vim.api.nvim_buf_set_name(buffer, filename)
+  end
+  return buffer
+end
+
+local function delete_buffer(buffer)
+  if vim.api.nvim_buf_is_valid(buffer) then
+    vim.api.nvim_buf_delete(buffer, { force = true })
+  end
+end
+
+equal("1.0.12", bird2.version, "plugin version")
+
+local function check_heuristic(lines, expected, label)
+  local buffer = new_buffer(lines)
+  equal(expected, bird2.looks_like_bird2(buffer), label)
+  delete_buffer(buffer)
+end
+
+check_heuristic({ "protocol evpn fabric {" }, true, "EVPN protocol")
+check_heuristic({ "protocol aggregator routes {" }, true, "aggregator protocol")
+check_heuristic({ "ipv6-sadr table source_specific;" }, true, "typed table")
+check_heuristic({ "table users {" }, false, "one generic table")
+check_heuristic({ "filter inbound {", "  export all;" }, true, "two policy signals")
+check_heuristic({ "/* protocol bgp hidden { */", "ordinary text" }, false, "block comments")
+
+local bounded_lines = {}
+for index = 1, 200 do
+  bounded_lines[index] = "# ordinary configuration"
+end
+bounded_lines[201] = "protocol bgp too_late {"
+check_heuristic(bounded_lines, false, "200 line bound")
+
+equal("bird2", vim.filetype.match({ filename = "/tmp/bird2.conf" }), "exact filename")
+equal("bird2", vim.filetype.match({ filename = "/etc/bird/custom.conf" }), "known directory")
+falsy(vim.filetype.match({ filename = "/tmp/bluebird.conf" }) == "bird2", "unrelated filename")
+
+local generic = new_buffer({ "filter inbound {", "  export all;" }, "/tmp/generic-policy.conf")
+equal("bird2", vim.filetype.match({ buf = generic }), "content-based filetype match")
+delete_buffer(generic)
+
+bird2.config.heuristic_detect = false
+local disabled = new_buffer({ "protocol bgp upstream {" }, "/tmp/disabled.conf")
+falsy(vim.filetype.match({ buf = disabled }) == "bird2", "disabled heuristic")
+delete_buffer(disabled)
+bird2.config.heuristic_detect = true
+
+local fallback = new_buffer({ "protocol bridge fabric {" }, "/tmp/fallback.conf")
+vim.bo[fallback].filetype = "conf"
+vim.api.nvim_exec_autocmds("BufWritePost", { buffer = fallback })
+equal("bird2", vim.bo[fallback].filetype, "generic conf fallback")
+delete_buffer(fallback)
+
+local filetype_fallback = new_buffer({ "protocol evpn fabric {" }, "/tmp/filetype-fallback.conf")
+vim.bo[filetype_fallback].filetype = "conf"
+vim.api.nvim_exec_autocmds("FileType", { buffer = filetype_fallback })
+equal("bird2", vim.bo[filetype_fallback].filetype, "FileType conf fallback")
+delete_buffer(filetype_fallback)
+
+local preserved = new_buffer({ "protocol bgp upstream {" }, "/tmp/preserved.conf")
+vim.bo[preserved].filetype = "json"
+vim.api.nvim_exec_autocmds("BufWritePost", { buffer = preserved })
+equal("json", vim.bo[preserved].filetype, "preserve existing filetype")
+delete_buffer(preserved)
+
+local syntax_buffer = new_buffer({
+  "mac set allowed = [ 02:00:00:00:00:01 ];",
+  "int flags = (ifindex | 2) & 7;",
+  "if ready && enabled || fallback then accept;",
+  "local_metric = bgp_unknown_0x2a;",
+  "proto_protocol_type = AF_IPV6;",
+  "kbr_source = KBR_SRC_DYNAMIC;",
+})
+vim.cmd("runtime! syntax/bird2.vim")
+
+local function syntax_group(line, needle)
+  local column = vim.fn.stridx(vim.fn.getline(line), needle) + 1
+  return vim.fn.synIDattr(vim.fn.synID(line, column, 1), "name")
+end
+
+equal("bird2Type", syntax_group(1, "mac set"), "mac set syntax")
+equal("bird2Bitwise", syntax_group(2, "|"), "bitwise or syntax")
+equal("bird2Bitwise", syntax_group(2, "&"), "bitwise and syntax")
+equal("bird2Logical", syntax_group(3, "&&"), "logical and syntax")
+equal("bird2Logical", syntax_group(3, "||"), "logical or syntax")
+equal("bird2RouteAttr", syntax_group(4, "local_metric"), "local metric syntax")
+equal("bird2RouteAttr", syntax_group(4, "bgp_unknown_0x2a"), "unknown BGP attr syntax")
+equal("bird2RuntimeAttr", syntax_group(5, "proto_protocol_type"), "runtime attr syntax")
+equal("bird2AddressFamilyConst", syntax_group(5, "AF_IPV6"), "address family syntax")
+equal("bird2BridgeSourceConst", syntax_group(6, "KBR_SRC_DYNAMIC"), "bridge source syntax")
+
+bird2.on_attach(syntax_buffer)
+local first_formatoptions = vim.bo[syntax_buffer].formatoptions
+local first_matchpairs = vim.bo[syntax_buffer].matchpairs
+bird2.on_attach(syntax_buffer)
+equal(first_formatoptions, vim.bo[syntax_buffer].formatoptions, "idempotent format options")
+equal(first_matchpairs, vim.bo[syntax_buffer].matchpairs, "idempotent matchpairs")
+truthy(vim.fn.maparg("<Plug>Bird2Comment", "n", false, true).callback, "buffer mapping")
+delete_buffer(syntax_buffer)
+
+local mapped = new_buffer({ "protocol bgp upstream {" }, "/tmp/mapped.bird")
+vim.keymap.set("n", "<leader>c", "<cmd>let g:bird2_preserved_mapping = 1<cr>", { buffer = mapped })
+vim.bo[mapped].filetype = "bird2"
+local leader_mapping = vim.fn.maparg("<leader>c", "n", false, true)
+truthy(leader_mapping.rhs:find("bird2_preserved_mapping", 1, true), "preserve existing leader mapping")
+vim.cmd("Bird2 disable")
+equal(false, vim.b[mapped].bird2_enabled, "buffer command disables actions")
+vim.cmd("Bird2 enable")
+equal(true, vim.b[mapped].bird2_enabled, "buffer command enables actions")
+delete_buffer(mapped)
+
+vim.cmd("qa!")
