@@ -86,6 +86,15 @@ standard SemVer tag, submodule-free installable archives, and a GitHub Release.
   CI covers Neovim `v0.9.5` and stable, runs Luacheck and StyLua, checks out
   submodules recursively, and verifies byte-identical Vim/Neovim syntax mirrors.
 
+- 🧾 **引入可审计的变更片段** / **Adopt auditable change fragments**
+
+  新增零依赖的变更片段工作流，可在 PR 中记录语义版本级别和双语发布说明，
+  发布时按分类汇总到 CHANGELOG，并让 GitHub Release 直接复用同一份说明。
+
+  Added a dependency-free change-fragment workflow that records semantic
+  version bumps and bilingual notes in pull requests, groups them into the
+  changelog, and feeds the same notes into GitHub Releases.
+
 ### 🐛 Fixed / 修复
 
 - ♻️ **`on_attach` 幂等性与自动换行** / **Idempotent `on_attach` and text wrapping**
@@ -124,6 +133,12 @@ standard SemVer tag, submodule-free installable archives, and a GitHub Release.
 
 ### 🔌 Compatibility / 兼容性
 
+- 仓库由 BIRD2.nvim 更名为 BIRD.nvim，并提供 lazy.nvim、packer.nvim、原生
+  packages 与现有 checkout 的双语迁移步骤；`shared/` 开发子模块同步指向
+  BIRD.vim。
+- The repository was renamed from BIRD2.nvim to BIRD.nvim with bilingual
+  migration steps for lazy.nvim, packer.nvim, native packages, and existing
+  checkouts; the development-only `shared/` submodule now points to BIRD.vim.
 - 对外兼容面仍为 `filetype=bird2`、`require("bird2")`、`:Bird2`、
   `:Bird2Health` 与 `:checkhealth bird2`。
 - The public compatibility surface remains `filetype=bird2`,

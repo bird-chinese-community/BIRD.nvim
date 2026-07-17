@@ -38,6 +38,7 @@ LAZY.NVIM ~
 	Add this plugin spec to your lazy.nvim configuration: >
 		{
 		  "bird-chinese-community/BIRD.nvim",
+		  version = "^1.0.13",
 		  lazy = false,
 		  config = function()
 		    require("bird2").setup()
@@ -90,19 +91,16 @@ Native package (rename the old directory and update its remote): >
 	  https://github.com/bird-chinese-community/BIRD.nvim.git
 	git -C ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim \
 	  pull --ff-only
-	git -C ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim \
-	  submodule sync --recursive
-	git -C ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim \
-	  submodule update --init --recursive
 <
 
 For a manual checkout at another path (the directory name may stay): >
 	git -C /path/to/BIRD2.nvim remote set-url origin \
 	  https://github.com/bird-chinese-community/BIRD.nvim.git
 	git -C /path/to/BIRD2.nvim pull --ff-only
-	git -C /path/to/BIRD2.nvim submodule sync --recursive
-	git -C /path/to/BIRD2.nvim submodule update --init --recursive
 <
+
+The shared/ submodule is needed only by contributors synchronizing syntax
+changes. It is not required at runtime.
 
 ==============================================================================
 CONFIGURATION					*bird2-configuration*
