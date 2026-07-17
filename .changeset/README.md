@@ -68,8 +68,9 @@ self-contained.
 
 4. Run the same command without `--dry-run`. It inserts the new bilingual
    section in `CHANGELOG.md` and deletes the consumed fragments.
-5. Review and commit the release diff, then create the matching `nvim-v*` tag
-   for the existing GitHub Release workflow.
+5. Review and commit the release diff, then create the matching standard SemVer
+   tag (`v1.0.14`, for example). The Release workflow validates the tag against
+   both the Lua module version and bundled syntax version before publishing.
 
 The command intentionally does not modify Lua/Vim runtime files or create tags.
 Those remain explicit release-review steps.

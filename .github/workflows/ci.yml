@@ -97,3 +97,21 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           version: 2.5.2
           args: --check lua plugin ftplugin tests/headless.lua tests/minimal_init.lua
+
+  release-package:
+    name: Release package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+      - uses: rhysd/action-setup-vim@v1
+        with:
+          version: stable
+          neovim: true
+      - name: Build and smoke-test archives
+        run: |
+          TAG=$(node scripts/release.mjs current-tag)
+          node scripts/release.mjs package "$TAG" dist
+          node scripts/release.mjs verify "$TAG" dist

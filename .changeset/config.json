@@ -1,7 +1,7 @@
 {
   "project": "BIRD.nvim",
   "changelog": "CHANGELOG.md",
-  "releaseLink": "https://github.com/bird-chinese-community/BIRD.nvim/releases/tag/nvim-v{version}",
+  "releaseLink": "https://github.com/bird-chinese-community/BIRD.nvim/releases/tag/v{version}",
   "categories": [
     {
       "id": "breaking",

@@ -1,5 +1,6 @@
 # Lua Rocks
 .worktrees/
+dist/
 luarocks/
 luarocks.*.lua
 

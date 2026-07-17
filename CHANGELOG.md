@@ -16,15 +16,16 @@ All notable changes to BIRD.nvim are documented in this file.
 
 ## [1.0.13] - 2026-07-17
 
-`1.0.13` 由 [PR #1](https://github.com/bird-chinese-community/BIRD.nvim/pull/1)
+`1.0.13` 的实现由 [PR #1](https://github.com/bird-chinese-community/BIRD.nvim/pull/1)
 于 2026-07-17 合并，并内置 `1.0.13-20260717` 的 BIRD.vim 语法快照。
-BIRD.nvim 仓库本身尚未为该版本创建独立 GitHub Release。
+这是 BIRD.nvim 独立仓库首次补齐标准 SemVer tag、无 submodule 依赖的
+可安装包与 GitHub Release 的版本。
 
-Version `1.0.13` was merged in
+The implementation for version `1.0.13` was merged in
 [PR #1](https://github.com/bird-chinese-community/BIRD.nvim/pull/1) on
-2026-07-17 and embeds the `1.0.13-20260717` BIRD.vim syntax snapshot. The
-BIRD.nvim repository itself does not have a separate GitHub Release for this
-version.
+2026-07-17 and embeds the `1.0.13-20260717` BIRD.vim syntax snapshot. This is
+the first version for which the standalone BIRD.nvim repository backfills a
+standard SemVer tag, submodule-free installable archives, and a GitHub Release.
 
 ### ✨ Added / 新增
 
@@ -71,11 +72,11 @@ version.
 - 📦 **修正 lazy.nvim 与发布自动化** / **Corrected lazy.nvim and release automation**
 
   lazy.nvim 示例改为提前加载检测器，避免 `ft = "bird2"` 造成加载循环；Release
-  Workflow 改用 `nvim-v*` 标签与 Neovim 专用发布说明。
+  Workflow 改用标准 `v*` SemVer 标签与 Neovim 专用发布说明。
 
   The lazy.nvim example now loads the detector eagerly, avoiding the
-  `ft = "bird2"` loading cycle. The Release Workflow now uses `nvim-v*` tags
-  and Neovim-specific release notes.
+  `ft = "bird2"` loading cycle. The Release Workflow now uses standard `v*`
+  SemVer tags and Neovim-specific release notes.
 
 - 🔄 **CI 与语法镜像同步** / **CI and syntax-mirror synchronization**
 
