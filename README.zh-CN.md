@@ -10,6 +10,7 @@ Version: [English](README.md) | 简体中文
 
 [![MPL-2.0 许可证](https://img.shields.io/badge/License-MPL--2.0-blue?style=flat-square)](LICENSE)
 [![Neovim 0.9+](https://img.shields.io/badge/Neovim-0.9+-green?style=flat-square&logo=neovim)](https://neovim.io/)
+[![GitHub Release](https://img.shields.io/github/v/release/bird-chinese-community/BIRD.nvim?style=flat-square)](https://github.com/bird-chinese-community/BIRD.nvim/releases/latest)
 [![GitHub Stars](https://img.shields.io/github/stars/bird-chinese-community/BIRD.nvim?style=flat-square&logo=github)](https://github.com/bird-chinese-community/BIRD.nvim)
 [![GitHub Issues](https://img.shields.io/github/issues/bird-chinese-community/BIRD.nvim?style=flat-square&logo=github)](https://github.com/bird-chinese-community/BIRD.nvim/issues)
 [![维护状态](https://img.shields.io/badge/维护中-是-success?style=flat-square)](https://github.com/bird-chinese-community/BIRD.nvim/graphs/commit-activity)
@@ -30,7 +31,7 @@ Version: [English](README.md) | 简体中文
   - [功能特性](#功能特性)
   - [安装](#安装)
     - [使用 lazy.nvim](#使用-lazynvim)
-    - [使用 pack.nvim](#使用-packnvim)
+    - [使用原生 package](#使用原生-package)
   - [更新](#更新)
   - [文件类型检测](#文件类型检测)
   - [文档](#文档)
@@ -76,6 +77,7 @@ Version: [English](README.md) | 简体中文
 ```lua
 {
   "bird-chinese-community/BIRD.nvim",
+  version = "^1.0.13",
   lazy = false,
   config = function()
     require("bird2").setup()
@@ -85,13 +87,9 @@ Version: [English](README.md) | 简体中文
 
 插件需要在文件类型检测前加载；仅使用 `ft = "bird2"` 会让 BIRD 专用文件名形成检测与加载的循环依赖。
 
-### 使用 pack.nvim
+### 使用原生 package
 
-```vim
-packadd! BIRD.nvim
-```
-
-或手动克隆到 pack 目录：
+将仓库克隆到 `start` package 目录后，Neovim 会在启动时加载：
 
 ```bash
 git clone https://github.com/bird-chinese-community/BIRD.nvim \
@@ -113,6 +111,11 @@ cd BIRD.nvim
 
 本仓库可直接作为 Neovim package 目录使用。
 
+每个 [GitHub Release](https://github.com/bird-chinese-community/BIRD.nvim/releases)
+也会附带独立的 ZIP、tar.gz 与 `SHA256SUMS`。Release 压缩包不包含仅供开发使用
+的 `shared/` submodule，并已生成 `doc/tags`。完整包体约束与验证步骤参见
+[发布手册](RELEASING.md)。
+
 </details>
 
 ---
@@ -129,7 +132,7 @@ GitHub 会重定向原 `BIRD2.nvim` 仓库 URL，因此现有 checkout 仍可继
 :PackerSync
 ```
 
-如果现有原生 package checkout 仍使用旧目录名，请重命名目录、更新 remote，再刷新仓库与 submodule：
+如果现有原生 package checkout 仍使用旧目录名，请重命名目录、更新 remote，再刷新仓库：
 
 如果旧版 vimdoc 安装使用小写目录名 `bird2.nvim`，请在第一条命令中用它替换 `BIRD2.nvim`。
 
@@ -139,21 +142,17 @@ mv ~/.local/share/nvim/site/pack/plugins/start/BIRD2.nvim \
 git -C ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim \
   remote set-url origin https://github.com/bird-chinese-community/BIRD.nvim.git
 git -C ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim pull --ff-only
-git -C ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim \
-  submodule sync --recursive
-git -C ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim \
-  submodule update --init --recursive
 ```
 
-对于位于其他路径的手动 checkout，目录名可保持不变；更新 remote 与 submodule URL：
+对于位于其他路径的手动 checkout，目录名可保持不变；更新 remote：
 
 ```bash
 git -C /path/to/BIRD2.nvim remote set-url origin \
   https://github.com/bird-chinese-community/BIRD.nvim.git
 git -C /path/to/BIRD2.nvim pull --ff-only
-git -C /path/to/BIRD2.nvim submodule sync --recursive
-git -C /path/to/BIRD2.nvim submodule update --init --recursive
 ```
+
+`shared/` submodule 只在贡献语法变更时需要，日常使用插件无需初始化。
 
 兼容 API 保持不变：现有配置继续使用 `require("bird2")`、`filetype=bird2`、`:Bird2` 与 `:checkhealth bird2`。
 

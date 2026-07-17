@@ -16,15 +16,16 @@ All notable changes to BIRD.nvim are documented in this file.
 
 ## [1.0.13] - 2026-07-17
 
-`1.0.13` 由 [PR #1](https://github.com/bird-chinese-community/BIRD.nvim/pull/1)
+`1.0.13` 的实现由 [PR #1](https://github.com/bird-chinese-community/BIRD.nvim/pull/1)
 于 2026-07-17 合并，并内置 `1.0.13-20260717` 的 BIRD.vim 语法快照。
-BIRD.nvim 仓库本身尚未为该版本创建独立 GitHub Release。
+这是 BIRD.nvim 独立仓库首次补齐标准 SemVer tag、无 submodule 依赖的
+可安装包与 GitHub Release 的版本。
 
-Version `1.0.13` was merged in
+The implementation for version `1.0.13` was merged in
 [PR #1](https://github.com/bird-chinese-community/BIRD.nvim/pull/1) on
-2026-07-17 and embeds the `1.0.13-20260717` BIRD.vim syntax snapshot. The
-BIRD.nvim repository itself does not have a separate GitHub Release for this
-version.
+2026-07-17 and embeds the `1.0.13-20260717` BIRD.vim syntax snapshot. This is
+the first version for which the standalone BIRD.nvim repository backfills a
+standard SemVer tag, submodule-free installable archives, and a GitHub Release.
 
 ### ✨ Added / 新增
 
@@ -71,11 +72,11 @@ version.
 - 📦 **修正 lazy.nvim 与发布自动化** / **Corrected lazy.nvim and release automation**
 
   lazy.nvim 示例改为提前加载检测器，避免 `ft = "bird2"` 造成加载循环；Release
-  Workflow 改用 `nvim-v*` 标签与 Neovim 专用发布说明。
+  Workflow 改用标准 `v*` SemVer 标签与 Neovim 专用发布说明。
 
   The lazy.nvim example now loads the detector eagerly, avoiding the
-  `ft = "bird2"` loading cycle. The Release Workflow now uses `nvim-v*` tags
-  and Neovim-specific release notes.
+  `ft = "bird2"` loading cycle. The Release Workflow now uses standard `v*`
+  SemVer tags and Neovim-specific release notes.
 
 - 🔄 **CI 与语法镜像同步** / **CI and syntax-mirror synchronization**
 
@@ -84,6 +85,15 @@ version.
 
   CI covers Neovim `v0.9.5` and stable, runs Luacheck and StyLua, checks out
   submodules recursively, and verifies byte-identical Vim/Neovim syntax mirrors.
+
+- 🧾 **引入可审计的变更片段** / **Adopt auditable change fragments**
+
+  新增零依赖的变更片段工作流，可在 PR 中记录语义版本级别和双语发布说明，
+  发布时按分类汇总到 CHANGELOG，并让 GitHub Release 直接复用同一份说明。
+
+  Added a dependency-free change-fragment workflow that records semantic
+  version bumps and bilingual notes in pull requests, groups them into the
+  changelog, and feeds the same notes into GitHub Releases.
 
 ### 🐛 Fixed / 修复
 
@@ -123,9 +133,80 @@ version.
 
 ### 🔌 Compatibility / 兼容性
 
+- 仓库由 BIRD2.nvim 更名为 BIRD.nvim，并提供 lazy.nvim、packer.nvim、原生
+  packages 与现有 checkout 的双语迁移步骤；`shared/` 开发子模块同步指向
+  BIRD.vim。
+- The repository was renamed from BIRD2.nvim to BIRD.nvim with bilingual
+  migration steps for lazy.nvim, packer.nvim, native packages, and existing
+  checkouts; the development-only `shared/` submodule now points to BIRD.vim.
 - 对外兼容面仍为 `filetype=bird2`、`require("bird2")`、`:Bird2`、
   `:Bird2Health` 与 `:checkhealth bird2`。
 - The public compatibility surface remains `filetype=bird2`,
   `require("bird2")`, `:Bird2`, `:Bird2Health`, and `:checkhealth bird2`.
 
-[1.0.13]: https://github.com/bird-chinese-community/BIRD.nvim/pull/1
+## [1.0.11] - 2026-06-11
+
+### 🔧 Changed / 变更
+
+- 🏷️ **同步插件与语法版本** / **Synchronized plugin and syntax versions**
+
+  将 Neovim runtime 内置语法更新为 `1.0.11-20260611`，与独立 BIRD.vim
+  及主语法仓库保持一致；现有 Lua 配置接口保持兼容。
+
+  Updated the bundled Neovim syntax to `1.0.11-20260611`, matching BIRD.vim
+  and the canonical grammar repository while preserving the existing Lua
+  configuration interface.
+
+## [1.0.8] - 2026-03-01
+
+### ✨ Added / 新增
+
+- 🔤 **扩展协议、属性与短语覆盖** / **Expanded protocol, property, and phrase coverage**
+
+  同步 BIRD.vim 中新增的协议与地址关键字、CLI 多词短语、byte string、属性与
+  操作符规则。
+
+  Synchronized the protocol and address keywords, multi-word CLI phrases,
+  byte-string handling, property rules, and operators added in BIRD.vim.
+
+### 🐛 Fixed / 修复
+
+- 🔐 **修正 RPKI 与语法镜像** / **Corrected RPKI and the syntax mirror**
+
+  修正 `retry` 等 RPKI 关键字分类，并确保仓库内的 Neovim syntax 是可独立
+  安装的普通文件，而不是依赖仓库外路径的链接。
+
+  Corrected RPKI keyword classification including `retry` and kept the bundled
+  Neovim syntax as a standalone regular file rather than an external-path link.
+
+## [1.0.7] - 2026-02-28
+
+### ✨ Added / 新增
+
+- 🧪 **建立独立 CI 与发布基础** / **Established standalone CI and release foundations**
+
+  新增 Neovim CI、Release workflow、语法同步脚本与 BIRD.vim 开发期 submodule，
+  并将 `1.0.7-20260228` 语法作为普通 runtime 文件随插件交付。
+
+  Added Neovim CI, a release workflow, a syntax synchronization script, and a
+  development-time BIRD.vim submodule while shipping syntax snapshot
+  `1.0.7-20260228` as a regular runtime file.
+
+## [1.0.6] - 2025-12-24
+
+### ✨ Added / 新增
+
+- 🐦 **首个独立 Neovim 插件版本** / **Initial standalone Neovim plugin**
+
+  提供 Lua `setup()` API、自动 filetype detection、health check、ftplugin、
+  BIRD 2 syntax、双语 README、vimdoc 与初始测试套件。
+
+  Introduced the Lua `setup()` API, automatic filetype detection, health
+  checks, an ftplugin, BIRD 2 syntax, bilingual READMEs, vimdoc, and the initial
+  test suite.
+
+[1.0.13]: https://github.com/bird-chinese-community/BIRD.nvim/releases/tag/v1.0.13
+[1.0.11]: https://github.com/bird-chinese-community/BIRD.nvim/releases/tag/v1.0.11
+[1.0.8]: https://github.com/bird-chinese-community/BIRD.nvim/releases/tag/v1.0.8
+[1.0.7]: https://github.com/bird-chinese-community/BIRD.nvim/releases/tag/v1.0.7
+[1.0.6]: https://github.com/bird-chinese-community/BIRD.nvim/releases/tag/v1.0.6

@@ -10,6 +10,7 @@ Version: English | [简体中文](README.zh-CN.md)
 
 [![MPL-2.0 License](https://img.shields.io/badge/License-MPL--2.0-blue?style=flat-square)](LICENSE)
 [![Neovim 0.9+](https://img.shields.io/badge/Neovim-0.9+-green?style=flat-square&logo=neovim)](https://neovim.io/)
+[![GitHub Release](https://img.shields.io/github/v/release/bird-chinese-community/BIRD.nvim?style=flat-square)](https://github.com/bird-chinese-community/BIRD.nvim/releases/latest)
 [![GitHub Stars](https://img.shields.io/github/stars/bird-chinese-community/BIRD.nvim?style=flat-square&logo=github)](https://github.com/bird-chinese-community/BIRD.nvim)
 [![GitHub Issues](https://img.shields.io/github/issues/bird-chinese-community/BIRD.nvim?style=flat-square&logo=github)](https://github.com/bird-chinese-community/BIRD.nvim/issues)
 [![Maintenance](https://img.shields.io/badge/Maintained-Yes-success?style=flat-square)](https://github.com/bird-chinese-community/BIRD.nvim/graphs/commit-activity)
@@ -30,7 +31,7 @@ Version: English | [简体中文](README.zh-CN.md)
   - [Features](#features)
   - [Installation](#installation)
     - [Using lazy.nvim](#using-lazynvim)
-    - [Using pack.nvim](#using-packnvim)
+    - [Using native packages](#using-native-packages)
   - [Updating](#updating)
   - [Filetype Detection](#filetype-detection)
   - [Documentation](#documentation)
@@ -76,6 +77,7 @@ Choose your preferred plugin manager:
 ```lua
 {
   "bird-chinese-community/BIRD.nvim",
+  version = "^1.0.13",
   lazy = false,
   config = function()
     require("bird2").setup()
@@ -86,13 +88,10 @@ Choose your preferred plugin manager:
 The plugin must load before filetype detection runs; using `ft = "bird2"` alone
 creates a detection/loading cycle for BIRD-specific filenames.
 
-### Using pack.nvim
+### Using native packages
 
-```vim
-packadd! BIRD.nvim
-```
-
-Or manually clone to your pack directory:
+Clone the repository into a `start` package directory; Neovim loads it during
+startup:
 
 ```bash
 git clone https://github.com/bird-chinese-community/BIRD.nvim \
@@ -114,6 +113,12 @@ cd BIRD.nvim
 
 This repository can be used directly as a Neovim package directory.
 
+Every [GitHub Release](https://github.com/bird-chinese-community/BIRD.nvim/releases)
+also includes standalone ZIP and tar.gz archives plus `SHA256SUMS`. Release
+archives exclude the development-only `shared/` submodule and include generated
+`doc/tags`. See the [release runbook](RELEASING.md) for the verified package
+contract.
+
 </details>
 
 ---
@@ -131,7 +136,7 @@ GitHub redirects the former `BIRD2.nvim` repository URL, so existing checkouts c
 ```
 
 For an existing native package checkout, rename its directory, update the
-remote, and then refresh the repository and its submodule:
+remote, and then refresh the repository:
 
 If an older vimdoc installation uses the lowercase directory `bird2.nvim`,
 substitute that name for `BIRD2.nvim` in the first command.
@@ -142,22 +147,19 @@ mv ~/.local/share/nvim/site/pack/plugins/start/BIRD2.nvim \
 git -C ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim \
   remote set-url origin https://github.com/bird-chinese-community/BIRD.nvim.git
 git -C ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim pull --ff-only
-git -C ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim \
-  submodule sync --recursive
-git -C ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim \
-  submodule update --init --recursive
 ```
 
 For a manual checkout at another path, the directory name can remain unchanged;
-update its remote and submodule URLs:
+update its remote:
 
 ```bash
 git -C /path/to/BIRD2.nvim remote set-url origin \
   https://github.com/bird-chinese-community/BIRD.nvim.git
 git -C /path/to/BIRD2.nvim pull --ff-only
-git -C /path/to/BIRD2.nvim submodule sync --recursive
-git -C /path/to/BIRD2.nvim submodule update --init --recursive
 ```
+
+The `shared/` submodule is only needed when contributing syntax changes; it is
+not required to use the plugin.
 
 The compatibility API remains unchanged: keep `require("bird2")`, `filetype=bird2`, `:Bird2`, and `:checkhealth bird2` in existing configurations.
 
