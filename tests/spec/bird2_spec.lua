@@ -1,5 +1,5 @@
--- Tests for bird2.nvim
-describe("bird2.nvim", function()
+-- Tests for BIRD.nvim
+describe("BIRD.nvim", function()
   local bird2 = require("bird2")
 
   it("can be required", function()

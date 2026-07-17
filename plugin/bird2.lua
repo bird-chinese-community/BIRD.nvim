@@ -66,4 +66,4 @@ api.nvim_create_autocmd("FileType", {
 
 api.nvim_create_user_command("Bird2Health", function()
   vim.cmd("checkhealth bird2")
-end, { desc = "Check bird2.nvim health" })
+end, { desc = "Check BIRD.nvim health" })

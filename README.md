@@ -1,4 +1,4 @@
-# BIRD2.nvim
+# BIRD.nvim
 
 <div align="center">
 
@@ -10,13 +10,13 @@ Version: English | [简体中文](README.zh-CN.md)
 
 [![MPL-2.0 License](https://img.shields.io/badge/License-MPL--2.0-blue?style=flat-square)](LICENSE)
 [![Neovim 0.9+](https://img.shields.io/badge/Neovim-0.9+-green?style=flat-square&logo=neovim)](https://neovim.io/)
-[![GitHub Stars](https://img.shields.io/github/stars/bird-chinese-community/BIRD2.nvim?style=flat-square&logo=github)](https://github.com/bird-chinese-community/BIRD2.nvim)
-[![GitHub Issues](https://img.shields.io/github/issues/bird-chinese-community/BIRD2.nvim?style=flat-square&logo=github)](https://github.com/bird-chinese-community/BIRD2.nvim/issues)
-[![Maintenance](https://img.shields.io/badge/Maintained-Yes-success?style=flat-square)](https://github.com/bird-chinese-community/BIRD2.nvim/graphs/commit-activity)
+[![GitHub Stars](https://img.shields.io/github/stars/bird-chinese-community/BIRD.nvim?style=flat-square&logo=github)](https://github.com/bird-chinese-community/BIRD.nvim)
+[![GitHub Issues](https://img.shields.io/github/issues/bird-chinese-community/BIRD.nvim?style=flat-square&logo=github)](https://github.com/bird-chinese-community/BIRD.nvim/issues)
+[![Maintenance](https://img.shields.io/badge/Maintained-Yes-success?style=flat-square)](https://github.com/bird-chinese-community/BIRD.nvim/graphs/commit-activity)
 
 <!-- Preview Image -->
 
-![BIRD2.nvim Preview](https://raw.githubusercontent.com/bird-chinese-community/BIRD-tm-language-grammar/main/.github/assets/bird2-grammar-vim-preview.jpg)
+![BIRD.nvim Preview](https://raw.githubusercontent.com/bird-chinese-community/BIRD-tm-language-grammar/main/.github/assets/bird2-grammar-vim-preview.jpg)
 
 </div>
 
@@ -24,13 +24,14 @@ Version: English | [简体中文](README.zh-CN.md)
 
 ## Table of Contents
 
-- [BIRD2.nvim](#bird2nvim)
+- [BIRD.nvim](#birdnvim)
   - [Table of Contents](#table-of-contents)
   - [Overview](#overview)
   - [Features](#features)
   - [Installation](#installation)
     - [Using lazy.nvim](#using-lazynvim)
     - [Using pack.nvim](#using-packnvim)
+  - [Updating](#updating)
   - [Filetype Detection](#filetype-detection)
   - [Documentation](#documentation)
   - [Configuration](#configuration)
@@ -44,9 +45,12 @@ Version: English | [简体中文](README.zh-CN.md)
 
 ## Overview
 
-`BIRD2.nvim` provides Neovim syntax highlighting, filetype detection, and filetype plugin support for BIRD 2 and BIRD 3 configuration files.
+`BIRD.nvim` provides Neovim syntax highlighting, filetype detection, and filetype plugin support for BIRD 2 and BIRD 3 configuration files.
 
 This is the Neovim plugin component of the [BIRD-tm-language-grammar](https://github.com/bird-chinese-community/bird-tm-language-grammar) project by the **BIRD Chinese Community**.
+
+> [!NOTE]
+> This repository was renamed from `BIRD2.nvim` to reflect support for both BIRD 2 and BIRD 3. GitHub redirects the old URL, while the `bird2` filetype, `require("bird2")`, commands, and configuration keys remain compatible.
 
 ---
 
@@ -71,7 +75,7 @@ Choose your preferred plugin manager:
 
 ```lua
 {
-  "bird-chinese-community/BIRD2.nvim",
+  "bird-chinese-community/BIRD.nvim",
   lazy = false,
   config = function()
     require("bird2").setup()
@@ -85,14 +89,14 @@ creates a detection/loading cycle for BIRD-specific filenames.
 ### Using pack.nvim
 
 ```vim
-packadd! BIRD2.nvim
+packadd! BIRD.nvim
 ```
 
 Or manually clone to your pack directory:
 
 ```bash
-git clone https://github.com/bird-chinese-community/BIRD2.nvim \
-  ~/.local/share/nvim/site/pack/plugins/start/BIRD2.nvim
+git clone https://github.com/bird-chinese-community/BIRD.nvim \
+  ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim
 ```
 
 </details>
@@ -102,8 +106,8 @@ git clone https://github.com/bird-chinese-community/BIRD2.nvim \
 
 ```bash
 # Clone the repository
-git clone https://github.com/bird-chinese-community/BIRD2.nvim.git
-cd BIRD2.nvim
+git clone https://github.com/bird-chinese-community/BIRD.nvim.git
+cd BIRD.nvim
 
 # Add this directory to your Neovim runtime path
 ```
@@ -111,6 +115,40 @@ cd BIRD2.nvim
 This repository can be used directly as a Neovim package directory.
 
 </details>
+
+---
+
+## Updating
+
+GitHub redirects the former `BIRD2.nvim` repository URL, so existing checkouts continue to fetch. Update the repository name in your plugin-manager configuration, then refresh it:
+
+```vim
+" lazy.nvim
+:Lazy sync
+
+" packer.nvim
+:PackerSync
+```
+
+For a native package checkout:
+
+```bash
+git -C ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim pull --ff-only
+git -C ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim \
+  submodule update --init --recursive
+```
+
+For an existing checkout using the old directory name, update its remote and submodule URLs:
+
+```bash
+git -C /path/to/BIRD2.nvim remote set-url origin \
+  https://github.com/bird-chinese-community/BIRD.nvim.git
+git -C /path/to/BIRD2.nvim pull --ff-only
+git -C /path/to/BIRD2.nvim submodule sync --recursive
+git -C /path/to/BIRD2.nvim submodule update --init --recursive
+```
+
+The compatibility API remains unchanged: keep `require("bird2")`, `filetype=bird2`, `:Bird2`, and `:checkhealth bird2` in existing configurations.
 
 ---
 
@@ -178,7 +216,7 @@ vim.filetype.add({
 
 `syntax/bird2.vim` is stored as a regular file so this repository works when installed standalone.
 
-To sync syntax updates from `BIRD2.vim`:
+To sync syntax updates from `BIRD.vim`:
 
 ```bash
 bash scripts/sync-syntax.sh
@@ -187,7 +225,7 @@ bash scripts/sync-syntax.sh
 Or use an explicit source path:
 
 ```bash
-bash scripts/sync-syntax.sh /path/to/BIRD2.vim/syntax/bird2.vim
+bash scripts/sync-syntax.sh /path/to/BIRD.vim/syntax/bird2.vim
 ```
 
 Contributions are welcome! Please feel free to submit a Pull Request.
@@ -210,7 +248,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## Related Projects
 
 - :bookmark: [BIRD-tm-language-grammar](https://github.com/bird-chinese-community/bird-tm-language-grammar) - TextMate grammar for BIRD 2 and BIRD 3
-- :star: [BIRD2.vim](https://github.com/bird-chinese-community/BIRD2.vim) - Vim syntax source
+- :star: [BIRD.vim](https://github.com/bird-chinese-community/BIRD.vim) - Vim syntax source
 - :electric_plug: [vscode-bird2](https://github.com/bird-chinese-community/vscode-bird2-conf) - VS Code extension
 
 ---

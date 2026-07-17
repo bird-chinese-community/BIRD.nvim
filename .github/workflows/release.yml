@@ -1,4 +1,4 @@
-# BIRD2.nvim GitHub Actions Release Workflow
+# BIRD.nvim GitHub Actions Release Workflow
 name: Release
 
 on:
@@ -33,17 +33,17 @@ jobs:
         id: release_notes
         run: |
           cat > release_notes.md << 'EOF'
-          ## BIRD2.nvim ${{ steps.version.outputs.version }}
+          ## BIRD.nvim ${{ steps.version.outputs.version }}
 
           ### Changes
-          See the [commit history](https://github.com/bird-chinese-community/BIRD2.nvim/commits/${{ steps.version.outputs.tag_name }}) for details.
+          See the [commit history](https://github.com/bird-chinese-community/BIRD.nvim/commits/${{ steps.version.outputs.tag_name }}) for details.
 
           ### Installation
 
           Using lazy.nvim:
           ```lua
           {
-            "bird-chinese-community/BIRD2.nvim",
+            "bird-chinese-community/BIRD.nvim",
             tag = "${{ steps.version.outputs.tag_name }}",
             lazy = false,
             config = function()
@@ -58,7 +58,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.version.outputs.tag_name }}
-          name: BIRD2.nvim ${{ steps.version.outputs.version }}
+          name: BIRD.nvim ${{ steps.version.outputs.version }}
           body_path: release_notes.md
           draft: false
           prerelease: false

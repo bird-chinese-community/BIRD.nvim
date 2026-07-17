@@ -1,9 +1,9 @@
---- Health check module for bird2.nvim
+--- Health check module for BIRD.nvim
 local M = {}
 
 --- Run health checks
 function M.check()
-  vim.health.start("bird2.nvim")
+  vim.health.start("BIRD.nvim")
 
   -- Check if plugin is loaded
   local bird2 = package.loaded["bird2"]
@@ -44,7 +44,7 @@ function M.check()
     vim.health.warn("Filetype detection may not be installed")
   end
 
-  vim.health.info("For help, see: https://github.com/bird-chinese-community/bird2.nvim")
+  vim.health.info("For help, see: https://github.com/bird-chinese-community/BIRD.nvim")
 end
 
 return M

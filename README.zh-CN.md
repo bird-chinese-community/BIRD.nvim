@@ -1,4 +1,4 @@
-# BIRD2.nvim
+# BIRD.nvim
 
 <div align="center">
 
@@ -10,13 +10,13 @@ Version: [English](README.md) | 简体中文
 
 [![MPL-2.0 许可证](https://img.shields.io/badge/License-MPL--2.0-blue?style=flat-square)](LICENSE)
 [![Neovim 0.9+](https://img.shields.io/badge/Neovim-0.9+-green?style=flat-square&logo=neovim)](https://neovim.io/)
-[![GitHub Stars](https://img.shields.io/github/stars/bird-chinese-community/BIRD2.nvim?style=flat-square&logo=github)](https://github.com/bird-chinese-community/BIRD2.nvim)
-[![GitHub Issues](https://img.shields.io/github/issues/bird-chinese-community/BIRD2.nvim?style=flat-square&logo=github)](https://github.com/bird-chinese-community/BIRD2.nvim/issues)
-[![维护状态](https://img.shields.io/badge/维护中-是-success?style=flat-square)](https://github.com/bird-chinese-community/BIRD2.nvim/graphs/commit-activity)
+[![GitHub Stars](https://img.shields.io/github/stars/bird-chinese-community/BIRD.nvim?style=flat-square&logo=github)](https://github.com/bird-chinese-community/BIRD.nvim)
+[![GitHub Issues](https://img.shields.io/github/issues/bird-chinese-community/BIRD.nvim?style=flat-square&logo=github)](https://github.com/bird-chinese-community/BIRD.nvim/issues)
+[![维护状态](https://img.shields.io/badge/维护中-是-success?style=flat-square)](https://github.com/bird-chinese-community/BIRD.nvim/graphs/commit-activity)
 
 <!-- 预览图片 -->
 
-![BIRD2.nvim 预览](https://raw.githubusercontent.com/bird-chinese-community/BIRD-tm-language-grammar/main/.github/assets/bird2-grammar-vim-preview.jpg)
+![BIRD.nvim 预览](https://raw.githubusercontent.com/bird-chinese-community/BIRD-tm-language-grammar/main/.github/assets/bird2-grammar-vim-preview.jpg)
 
 </div>
 
@@ -24,13 +24,14 @@ Version: [English](README.md) | 简体中文
 
 ## 目录
 
-- [BIRD2.nvim](#bird2nvim)
+- [BIRD.nvim](#birdnvim)
   - [目录](#目录)
   - [概述](#概述)
   - [功能特性](#功能特性)
   - [安装](#安装)
     - [使用 lazy.nvim](#使用-lazynvim)
     - [使用 pack.nvim](#使用-packnvim)
+  - [更新](#更新)
   - [文件类型检测](#文件类型检测)
   - [文档](#文档)
   - [配置](#配置)
@@ -44,9 +45,12 @@ Version: [English](README.md) | 简体中文
 
 ## 概述
 
-`BIRD2.nvim` 为 BIRD 2 与 BIRD 3 配置文件提供 Neovim 语法高亮、文件类型检测和文件类型插件支持。
+`BIRD.nvim` 为 BIRD 2 与 BIRD 3 配置文件提供 Neovim 语法高亮、文件类型检测和文件类型插件支持。
 
 这是 [BIRD 中文社区](https://github.com/bird-chinese-community) 的 [BIRD-tm-language-grammar](https://github.com/bird-chinese-community/bird-tm-language-grammar) 项目的 Neovim 插件组件。
+
+> [!NOTE]
+> 本仓库已从 `BIRD2.nvim` 更名为 `BIRD.nvim`，以体现同时支持 BIRD 2 与 BIRD 3。GitHub 会重定向旧 URL；`bird2` filetype、`require("bird2")`、命令和配置键继续保持兼容。
 
 ---
 
@@ -71,7 +75,7 @@ Version: [English](README.md) | 简体中文
 
 ```lua
 {
-  "bird-chinese-community/BIRD2.nvim",
+  "bird-chinese-community/BIRD.nvim",
   lazy = false,
   config = function()
     require("bird2").setup()
@@ -84,14 +88,14 @@ Version: [English](README.md) | 简体中文
 ### 使用 pack.nvim
 
 ```vim
-packadd! BIRD2.nvim
+packadd! BIRD.nvim
 ```
 
 或手动克隆到 pack 目录：
 
 ```bash
-git clone https://github.com/bird-chinese-community/BIRD2.nvim \
-  ~/.local/share/nvim/site/pack/plugins/start/BIRD2.nvim
+git clone https://github.com/bird-chinese-community/BIRD.nvim \
+  ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim
 ```
 
 </details>
@@ -101,8 +105,8 @@ git clone https://github.com/bird-chinese-community/BIRD2.nvim \
 
 ```bash
 # 克隆仓库
-git clone https://github.com/bird-chinese-community/BIRD2.nvim.git
-cd BIRD2.nvim
+git clone https://github.com/bird-chinese-community/BIRD.nvim.git
+cd BIRD.nvim
 
 # 将该目录加入 Neovim runtime path
 ```
@@ -110,6 +114,40 @@ cd BIRD2.nvim
 本仓库可直接作为 Neovim package 目录使用。
 
 </details>
+
+---
+
+## 更新
+
+GitHub 会重定向原 `BIRD2.nvim` 仓库 URL，因此现有 checkout 仍可继续拉取。建议先把插件管理器配置中的仓库名改为新名称，再执行更新：
+
+```vim
+" lazy.nvim
+:Lazy sync
+
+" packer.nvim
+:PackerSync
+```
+
+使用原生 package checkout 时：
+
+```bash
+git -C ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim pull --ff-only
+git -C ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim \
+  submodule update --init --recursive
+```
+
+如果现有 checkout 仍使用旧目录名，可更新 remote 与 submodule URL：
+
+```bash
+git -C /path/to/BIRD2.nvim remote set-url origin \
+  https://github.com/bird-chinese-community/BIRD.nvim.git
+git -C /path/to/BIRD2.nvim pull --ff-only
+git -C /path/to/BIRD2.nvim submodule sync --recursive
+git -C /path/to/BIRD2.nvim submodule update --init --recursive
+```
+
+兼容 API 保持不变：现有配置继续使用 `require("bird2")`、`filetype=bird2`、`:Bird2` 与 `:checkhealth bird2`。
 
 ---
 
@@ -177,7 +215,7 @@ vim.filetype.add({
 
 `syntax/bird2.vim` 保持为普通文件，确保本仓库单独安装时也可正常工作。
 
-从 `BIRD2.vim` 同步语法更新：
+从 `BIRD.vim` 同步语法更新：
 
 ```bash
 bash scripts/sync-syntax.sh
@@ -186,7 +224,7 @@ bash scripts/sync-syntax.sh
 也可指定显式源路径：
 
 ```bash
-bash scripts/sync-syntax.sh /path/to/BIRD2.vim/syntax/bird2.vim
+bash scripts/sync-syntax.sh /path/to/BIRD.vim/syntax/bird2.vim
 ```
 
 欢迎贡献！请随时提交 Pull Request。
@@ -209,7 +247,7 @@ bash scripts/sync-syntax.sh /path/to/BIRD2.vim/syntax/bird2.vim
 ## 相关项目
 
 - :bookmark: [BIRD-tm-language-grammar](https://github.com/bird-chinese-community/bird-tm-language-grammar) - BIRD 2 与 BIRD 3 的 TextMate 语法
-- :star: [BIRD2.vim](https://github.com/bird-chinese-community/BIRD2.vim) - Vim 语法源
+- :star: [BIRD.vim](https://github.com/bird-chinese-community/BIRD.vim) - Vim 语法源
 - :electric_plug: [vscode-bird2](https://github.com/bird-chinese-community/vscode-bird2-conf) - VS Code 扩展
 
 ---
