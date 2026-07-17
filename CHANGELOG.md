@@ -128,4 +128,69 @@ version.
 - The public compatibility surface remains `filetype=bird2`,
   `require("bird2")`, `:Bird2`, `:Bird2Health`, and `:checkhealth bird2`.
 
-[1.0.13]: https://github.com/bird-chinese-community/BIRD.nvim/pull/1
+## [1.0.11] - 2026-06-11
+
+### 🔧 Changed / 变更
+
+- 🏷️ **同步插件与语法版本** / **Synchronized plugin and syntax versions**
+
+  将 Neovim runtime 内置语法更新为 `1.0.11-20260611`，与独立 BIRD.vim
+  及主语法仓库保持一致；现有 Lua 配置接口保持兼容。
+
+  Updated the bundled Neovim syntax to `1.0.11-20260611`, matching BIRD.vim
+  and the canonical grammar repository while preserving the existing Lua
+  configuration interface.
+
+## [1.0.8] - 2026-03-01
+
+### ✨ Added / 新增
+
+- 🔤 **扩展协议、属性与短语覆盖** / **Expanded protocol, property, and phrase coverage**
+
+  同步 BIRD.vim 中新增的协议与地址关键字、CLI 多词短语、byte string、属性与
+  操作符规则。
+
+  Synchronized the protocol and address keywords, multi-word CLI phrases,
+  byte-string handling, property rules, and operators added in BIRD.vim.
+
+### 🐛 Fixed / 修复
+
+- 🔐 **修正 RPKI 与语法镜像** / **Corrected RPKI and the syntax mirror**
+
+  修正 `retry` 等 RPKI 关键字分类，并确保仓库内的 Neovim syntax 是可独立
+  安装的普通文件，而不是依赖仓库外路径的链接。
+
+  Corrected RPKI keyword classification including `retry` and kept the bundled
+  Neovim syntax as a standalone regular file rather than an external-path link.
+
+## [1.0.7] - 2026-02-28
+
+### ✨ Added / 新增
+
+- 🧪 **建立独立 CI 与发布基础** / **Established standalone CI and release foundations**
+
+  新增 Neovim CI、Release workflow、语法同步脚本与 BIRD.vim 开发期 submodule，
+  并将 `1.0.7-20260228` 语法作为普通 runtime 文件随插件交付。
+
+  Added Neovim CI, a release workflow, a syntax synchronization script, and a
+  development-time BIRD.vim submodule while shipping syntax snapshot
+  `1.0.7-20260228` as a regular runtime file.
+
+## [1.0.6] - 2025-12-24
+
+### ✨ Added / 新增
+
+- 🐦 **首个独立 Neovim 插件版本** / **Initial standalone Neovim plugin**
+
+  提供 Lua `setup()` API、自动 filetype detection、health check、ftplugin、
+  BIRD 2 syntax、双语 README、vimdoc 与初始测试套件。
+
+  Introduced the Lua `setup()` API, automatic filetype detection, health
+  checks, an ftplugin, BIRD 2 syntax, bilingual READMEs, vimdoc, and the initial
+  test suite.
+
+[1.0.13]: https://github.com/bird-chinese-community/BIRD.nvim/releases/tag/v1.0.13
+[1.0.11]: https://github.com/bird-chinese-community/BIRD.nvim/releases/tag/v1.0.11
+[1.0.8]: https://github.com/bird-chinese-community/BIRD.nvim/releases/tag/v1.0.8
+[1.0.7]: https://github.com/bird-chinese-community/BIRD.nvim/releases/tag/v1.0.7
+[1.0.6]: https://github.com/bird-chinese-community/BIRD.nvim/releases/tag/v1.0.6
