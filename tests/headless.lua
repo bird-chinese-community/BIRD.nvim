@@ -30,7 +30,7 @@ local function delete_buffer(buffer)
   end
 end
 
-equal("1.0.12", bird2.version, "plugin version")
+equal("1.0.13", bird2.version, "plugin version")
 
 local function check_heuristic(lines, expected, label)
   local buffer = new_buffer(lines)

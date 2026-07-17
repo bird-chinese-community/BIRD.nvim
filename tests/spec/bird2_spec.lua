@@ -4,7 +4,7 @@ describe("bird2.nvim", function()
 
   it("can be required", function()
     assert.is_not_nil(bird2)
-    assert.equals("1.0.12", bird2.version)
+    assert.equals("1.0.13", bird2.version)
   end)
 
   it("has default configuration", function()
