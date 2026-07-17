@@ -313,7 +313,7 @@ function today() {
 }
 
 function help() {
-  process.stdout.write(`Usage: node scripts/changeset.mjs <command>\n\nCommands:\n  new <slug> <patch|minor|major> <category>\n  check\n  status\n  notes <version>\n  release <version> [--date YYYY-MM-DD] [--dry-run]\n`);
+  process.stdout.write(`Usage: node scripts/changeset.mjs <command>\n\nCommands:\n  new <slug> <patch|minor|major> <category>\n  check\n  check-release\n  status\n  notes <version>\n  release <version> [--date YYYY-MM-DD] [--dry-run]\n`);
 }
 
 function createFragment(args, config) {
@@ -420,6 +420,12 @@ function main() {
   if (command === "check") {
     runRegressionChecks();
     process.stdout.write(`Validated ${fragments.length} pending changeset(s).\n`);
+  } else if (command === "check-release") {
+    runRegressionChecks();
+    if (fragments.length > 0) {
+      fail(`release requires zero pending changesets; found ${fragments.length}`);
+    }
+    process.stdout.write("Release changelog is fully consumed.\n");
   } else if (command === "status") {
     printStatus(config, fragments);
   } else if (command === "release") {

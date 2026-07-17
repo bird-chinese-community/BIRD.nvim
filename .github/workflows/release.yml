@@ -49,6 +49,7 @@ jobs:
           MANUAL_TAG: ${{ inputs.tag }}
         run: |
           TAG="${MANUAL_TAG:-$GITHUB_REF_NAME}"
+          node scripts/changeset.mjs check-release
           node scripts/release.mjs gha-outputs "$TAG"
 
       - name: Run Neovim compatibility tests
