@@ -79,9 +79,16 @@ packer.nvim: >
 	:PackerSync
 <
 
-Native package: >
+Native package (rename the old directory and update its remote): >
+	mv ~/.local/share/nvim/site/pack/plugins/start/BIRD2.nvim \
+	  ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim
+	git -C ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim \
+	  remote set-url origin \
+	  https://github.com/bird-chinese-community/BIRD.nvim.git
 	git -C ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim \
 	  pull --ff-only
+	git -C ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim \
+	  submodule sync --recursive
 	git -C ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim \
 	  submodule update --init --recursive
 <

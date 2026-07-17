@@ -130,10 +130,17 @@ GitHub redirects the former `BIRD2.nvim` repository URL, so existing checkouts c
 :PackerSync
 ```
 
-For a native package checkout:
+For an existing native package checkout, rename its directory, update the
+remote, and then refresh the repository and its submodule:
 
 ```bash
+mv ~/.local/share/nvim/site/pack/plugins/start/BIRD2.nvim \
+  ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim
+git -C ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim \
+  remote set-url origin https://github.com/bird-chinese-community/BIRD.nvim.git
 git -C ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim pull --ff-only
+git -C ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim \
+  submodule sync --recursive
 git -C ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim \
   submodule update --init --recursive
 ```
@@ -216,7 +223,8 @@ vim.filetype.add({
 
 `syntax/bird2.vim` is stored as a regular file so this repository works when installed standalone.
 
-To sync syntax updates from `BIRD.vim`:
+To sync syntax updates from the initialized `shared/bird2.vim` (`BIRD.vim`)
+submodule:
 
 ```bash
 bash scripts/sync-syntax.sh

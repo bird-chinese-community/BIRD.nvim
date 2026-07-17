@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-SOURCE_FILE="${1:-${ROOT_DIR}/../BIRD.vim/syntax/bird2.vim}"
+SOURCE_FILE="${1:-${ROOT_DIR}/shared/bird2.vim/syntax/bird2.vim}"
 TARGET_FILE="${ROOT_DIR}/syntax/bird2.vim"
 
 if [[ ! -f "${SOURCE_FILE}" ]]; then
