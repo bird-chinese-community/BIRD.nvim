@@ -8,17 +8,23 @@ All notable changes to BIRD.nvim are documented in this file.
 
 > The bundled syntax describes BIRD configuration syntax for editors. It does
 > not implement or claim coverage of upstream BIRD runtime semantic changes.
+>
+> 内置语法用于描述编辑器中的 BIRD 配置语法，不实现也不声称覆盖 BIRD 上游
+> 运行时语义变化。
 
 <!-- changeset-release-marker -->
 
 ## [1.0.13] - 2026-07-17
 
-`1.0.13` 由 [PR #1] 于 2026-07-17 合并，并内置 `1.0.13-20260717` 的
-BIRD.vim 语法快照。BIRD.nvim 仓库本身尚未为该版本创建独立 GitHub Release。
+`1.0.13` 由 [PR #1](https://github.com/bird-chinese-community/BIRD.nvim/pull/1)
+于 2026-07-17 合并，并内置 `1.0.13-20260717` 的 BIRD.vim 语法快照。
+BIRD.nvim 仓库本身尚未为该版本创建独立 GitHub Release。
 
-Version `1.0.13` was merged in [PR #1] on 2026-07-17 and embeds the
-`1.0.13-20260717` BIRD.vim syntax snapshot. The BIRD.nvim repository itself
-does not have a separate GitHub Release for this version.
+Version `1.0.13` was merged in
+[PR #1](https://github.com/bird-chinese-community/BIRD.nvim/pull/1) on
+2026-07-17 and embeds the `1.0.13-20260717` BIRD.vim syntax snapshot. The
+BIRD.nvim repository itself does not have a separate GitHub Release for this
+version.
 
 ### ✨ Added / 新增
 
@@ -38,9 +44,9 @@ does not have a separate GitHub Release for this version.
   新增 `.bird`、`.bird2`、`.bird3`、规范配置文件名与配置目录识别，并加入
   `FileType conf`、buffer read/write 和稍后写入内容的检测路径。
 
-  Added exact extension, canonical filename, and configuration-directory
-  detection, together with `FileType conf`, buffer read/write, and
-  late-populated-content paths.
+  Added exact detection for `.bird`, `.bird2`, and `.bird3` extensions,
+  canonical filenames, and configuration directories, together with
+  `FileType conf`, buffer read/write, and late-populated-content paths.
 
 - 🧪 **headless runtime 集成测试** / **Headless runtime integration tests**
 
@@ -123,4 +129,3 @@ does not have a separate GitHub Release for this version.
   `require("bird2")`, `:Bird2`, `:Bird2Health`, and `:checkhealth bird2`.
 
 [1.0.13]: https://github.com/bird-chinese-community/BIRD.nvim/pull/1
-[PR #1]: https://github.com/bird-chinese-community/BIRD.nvim/pull/1

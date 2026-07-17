@@ -186,6 +186,10 @@ To regenerate help tags:
 :helptags ~/.local/share/nvim/site/doc
 ```
 
+See the [changelog](CHANGELOG.md) for release history. Contributors should add
+a bilingual fragment following the [change-fragment guide](.changeset/README.md)
+for user-visible or release-worthy changes.
+
 ---
 
 ## Configuration
