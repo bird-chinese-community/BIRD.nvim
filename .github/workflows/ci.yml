@@ -12,6 +12,8 @@ on:
       - "shared/**"
       - "scripts/**"
       - "tests/**"
+      - ".changeset/**"
+      - "CHANGELOG.md"
       - ".gitmodules"
       - ".luacheckrc"
       - ".stylua.toml"
@@ -27,6 +29,8 @@ on:
       - "shared/**"
       - "scripts/**"
       - "tests/**"
+      - ".changeset/**"
+      - "CHANGELOG.md"
       - ".gitmodules"
       - ".luacheckrc"
       - ".stylua.toml"
@@ -37,6 +41,17 @@ permissions:
   contents: read
 
 jobs:
+  changesets:
+    name: Changelog changesets
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Validate pending changesets
+        run: node scripts/changeset.mjs check
+
   compatibility:
     name: Neovim ${{ matrix.neovim }}
     runs-on: ubuntu-latest
