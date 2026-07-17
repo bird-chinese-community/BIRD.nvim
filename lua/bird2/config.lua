@@ -1,4 +1,4 @@
---- Configuration management for bird2.nvim
+--- Configuration management for BIRD.nvim
 local M = {}
 
 --- Get a configuration value

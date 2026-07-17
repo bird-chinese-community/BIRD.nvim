@@ -1,4 +1,4 @@
--- BIRD2 filetype plugin
+-- BIRD filetype plugin
 -- This file runs when a bird2 file is opened
 
 local bird2 = require("bird2")
@@ -11,7 +11,7 @@ vim.api.nvim_buf_create_user_command(0, "Bird2", function(opts)
   local subcommand = opts.fargs[1]
 
   if subcommand == "version" then
-    print("bird2.nvim " .. bird2.version)
+    print("BIRD.nvim " .. bird2.version)
   elseif subcommand == "check" then
     vim.cmd("checkhealth bird2")
   elseif subcommand == "disable" then
@@ -27,7 +27,7 @@ end, {
   complete = function()
     return { "version", "check", "enable", "disable" }
   end,
-  desc = "BIRD2 plugin commands",
+  desc = "BIRD plugin commands",
 })
 
 local function mapping_is_available(mode)

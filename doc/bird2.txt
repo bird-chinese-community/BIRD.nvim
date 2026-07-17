@@ -1,4 +1,4 @@
-*bird2.txt*	BIRD2 Configuration Support for Neovim
+*bird2.txt*	BIRD Configuration Support for Neovim
 
 Author:  BIRD Chinese Community <dev-bird@xmsl.dev>
 License: MPL-2.0
@@ -9,17 +9,18 @@ TABLE OF CONTENTS					*bird2-contents*
 
     1. Introduction ................ |bird2-introduction|
     2. Installation ................ |bird2-installation|
-    3. Configuration ............... |bird2-configuration|
-    4. Commands .................... |bird2-commands|
-    5. Lua API ..................... |bird2-lua-api|
-    6. Autocommands ................ |bird2-autocommands|
-    7. Health Check ................ |bird2-health|
-    8. Related Projects ............ |bird2-related|
+    3. Updating ..................... |bird2-updating|
+    4. Configuration ............... |bird2-configuration|
+    5. Commands .................... |bird2-commands|
+    6. Lua API ..................... |bird2-lua-api|
+    7. Autocommands ................ |bird2-autocommands|
+    8. Health Check ................ |bird2-health|
+    9. Related Projects ............ |bird2-related|
 
 ==============================================================================
 INTRODUCTION					*bird2-introduction*
 
-The BIRD2.nvim plugin provides Neovim support for BIRD 2 and BIRD 3
+The BIRD.nvim plugin provides Neovim support for BIRD 2 and BIRD 3
 configuration files.
 
 Built on modern Lua APIs, this plugin offers:
@@ -36,7 +37,7 @@ LAZY.NVIM ~
 
 	Add this plugin spec to your lazy.nvim configuration: >
 		{
-		  "bird-chinese-community/bird2.nvim",
+		  "bird-chinese-community/BIRD.nvim",
 		  lazy = false,
 		  config = function()
 		    require("bird2").setup()
@@ -51,7 +52,7 @@ PACKER.NVIM ~
 
 	Add this declaration to your packer configuration: >
 		use {
-		  "bird-chinese-community/bird2.nvim",
+		  "bird-chinese-community/BIRD.nvim",
 		  config = function()
 		    require("bird2").setup()
 		  end
@@ -60,8 +61,48 @@ PACKER.NVIM ~
 
 MANUAL ~
 
-	git clone https://github.com/bird-chinese-community/bird2.nvim \
-	  ~/.local/share/nvim/site/pack/plugins/start/bird2.nvim
+	git clone https://github.com/bird-chinese-community/BIRD.nvim \
+	  ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim
+
+==============================================================================
+UPDATING					*bird2-updating*
+
+BIRD.nvim was renamed from BIRD2.nvim. GitHub redirects the old repository
+URL. The bird2 filetype, require("bird2"), commands, and configuration keys
+remain compatible. Update the repository name in your plugin-manager config.
+
+lazy.nvim: >
+	:Lazy sync
+<
+
+packer.nvim: >
+	:PackerSync
+<
+
+If the existing directory is lowercase bird2.nvim, use that name instead of
+BIRD2.nvim in the first command below.
+
+Native package (rename the old directory and update its remote): >
+	mv ~/.local/share/nvim/site/pack/plugins/start/BIRD2.nvim \
+	  ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim
+	git -C ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim \
+	  remote set-url origin \
+	  https://github.com/bird-chinese-community/BIRD.nvim.git
+	git -C ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim \
+	  pull --ff-only
+	git -C ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim \
+	  submodule sync --recursive
+	git -C ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim \
+	  submodule update --init --recursive
+<
+
+For a manual checkout at another path (the directory name may stay): >
+	git -C /path/to/BIRD2.nvim remote set-url origin \
+	  https://github.com/bird-chinese-community/BIRD.nvim.git
+	git -C /path/to/BIRD2.nvim pull --ff-only
+	git -C /path/to/BIRD2.nvim submodule sync --recursive
+	git -C /path/to/BIRD2.nvim submodule update --init --recursive
+<
 
 ==============================================================================
 CONFIGURATION					*bird2-configuration*
@@ -186,9 +227,9 @@ BIRD-tm-language-grammar ~
 	TextMate grammar for BIRD 2 and BIRD 3
 	https://github.com/bird-chinese-community/bird-tm-language-grammar
 
-BIRD2.vim ~
+BIRD.vim ~
 	Vim plugin
-	https://github.com/bird-chinese-community/BIRD2.vim
+	https://github.com/bird-chinese-community/BIRD.vim
 
 vscode-bird2 ~
 	VS Code extension
