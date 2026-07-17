@@ -13,14 +13,13 @@ function M.check()
     vim.health.warn("Plugin not loaded yet")
   end
 
-  -- Check syntax file
-  local syntax_path = debug.getinfo(1).source:match("@?(.*/)") .. "../syntax/bird2.vim"
-  syntax_path = vim.fn.fnamemodify(syntax_path, ":p")
+  -- Check syntax file through the active runtime path.
+  local syntax_path = vim.api.nvim_get_runtime_file("syntax/bird2.vim", false)[1]
 
-  if vim.fn.filereadable(syntax_path) == 1 then
+  if syntax_path and vim.fn.filereadable(syntax_path) == 1 then
     vim.health.ok("Syntax file found: " .. syntax_path)
   else
-    vim.health.error("Syntax file not found: " .. syntax_path)
+    vim.health.error("Syntax file not found: " .. (syntax_path or "syntax/bird2.vim"))
   end
 
   -- Check Lua version
@@ -32,15 +31,14 @@ function M.check()
   -- Check Neovim version
   local nvim_version = vim.version()
   local version_str = string.format("v%d.%d.%d", nvim_version.major, nvim_version.minor, nvim_version.patch)
-  if nvim_version.major >= 0 and nvim_version.minor >= 9 then
+  if nvim_version.major > 0 or (nvim_version.major == 0 and nvim_version.minor >= 9) then
     vim.health.ok("Neovim version: " .. version_str)
   else
     vim.health.warn("Neovim 0.9.0+ recommended (current: " .. version_str .. ")")
   end
 
-  -- Check for filetypes
-  local ft_detect = vim.fn.glob(vim.fn.stdpath("config") .. "/plugin/*bird*.lua", true, true)
-  if #ft_detect > 0 then
+  -- Check the registered detector rather than the user's config directory.
+  if vim.filetype.match({ filename = "bird.conf" }) == "bird2" then
     vim.health.ok("Filetype detection installed")
   else
     vim.health.warn("Filetype detection may not be installed")

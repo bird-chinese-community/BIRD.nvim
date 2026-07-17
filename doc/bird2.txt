@@ -2,7 +2,7 @@
 
 Author:  BIRD Chinese Community <dev-bird@xmsl.dev>
 License: MPL-2.0
-Version: 1.0.7
+Version: 1.0.13
 
 ==============================================================================
 TABLE OF CONTENTS					*bird2-contents*
@@ -13,17 +13,17 @@ TABLE OF CONTENTS					*bird2-contents*
     4. Commands .................... |bird2-commands|
     5. Lua API ..................... |bird2-lua-api|
     6. Autocommands ................ |bird2-autocommands|
-    7. Health Check ............... |bird2-health|
+    7. Health Check ................ |bird2-health|
     8. Related Projects ............ |bird2-related|
 
 ==============================================================================
 INTRODUCTION					*bird2-introduction*
 
-The bird2.nvim plugin provides Neovim support for BIRD2 (BIRD Internet
-Routing Daemon) configuration files.
+The BIRD2.nvim plugin provides Neovim support for BIRD 2 and BIRD 3
+configuration files.
 
 Built on modern Lua APIs, this plugin offers:
-	- Syntax highlighting for BIRD2 configuration
+    - Syntax highlighting aligned with BIRD 2.19 and BIRD 3.3
 	- Automatic filetype detection with heuristics
 	- Buffer-local settings and mappings
 	- Extensible Lua API
@@ -34,22 +34,29 @@ INSTALLATION					*bird2-installation*
 
 LAZY.NVIM ~
 
-	lua require("bird2").setup() {
-	  "bird-chinese-community/bird2.nvim",
-	  ft = "bird2",
-	  config = function()
-	    require("bird2").setup()
-	  end
-	}
+	Add this plugin spec to your lazy.nvim configuration: >
+		{
+		  "bird-chinese-community/bird2.nvim",
+		  lazy = false,
+		  config = function()
+		    require("bird2").setup()
+		  end
+		}
+<
+
+	The plugin must load before it can register BIRD filetype detection.
+	Avoid using only `ft = "bird2"` for lazy-loading.
 
 PACKER.NVIM ~
 
-	use {
-	  "bird-chinese-community/bird2.nvim",
-	  config = function()
-	    require("bird2").setup()
-	  end
-	}
+	Add this declaration to your packer configuration: >
+		use {
+		  "bird-chinese-community/bird2.nvim",
+		  config = function()
+		    require("bird2").setup()
+		  end
+		}
+<
 
 MANUAL ~
 
@@ -88,14 +95,13 @@ COMMANDS						*bird2-commands*
 
 *:Bird2*
 
-	:Bird2[command]
+	:Bird2 version
+	:Bird2 check
+	:Bird2 enable
+	:Bird2 disable
 
-	Available commands:
-
-		version	Show plugin version
-		check	Run health checks
-		enable	Enable plugin for current buffer
-		disable Disable plugin for current buffer
+	Buffer-local compatibility command for version reporting, health checks,
+	and temporarily enabling or disabling plugin actions in the current buffer.
 
 *:Bird2Health*
 
@@ -106,7 +112,7 @@ COMMANDS						*bird2-commands*
 ==============================================================================
 LUA API						*bird2-lua-api*
 
-*bird2.setup()*				*bird2.setup()*
+bird2.setup()					*bird2.setup()*
 
 	require("bird2").setup(opts)
 
@@ -115,7 +121,7 @@ LUA API						*bird2-lua-api*
 	Parameters: ~
 		{opts?} bird2.Config Configuration options
 
-*bird2.on_attach()*				*bird2.on_attach()*
+bird2.on_attach()				*bird2.on_attach()*
 
 	require("bird2").on_attach(bufnr)
 
@@ -125,12 +131,13 @@ LUA API						*bird2-lua-api*
 	Parameters: ~
 		{bufnr?} number Buffer number (default: 0)
 
-*bird2.looks_like_bird2()*			*bird2.looks_like_bird2()*
+bird2.looks_like_bird2()			*bird2.looks_like_bird2()*
 
 	local is_bird2 = require("bird2").looks_like_bird2(bufnr)
 
-	Check if a buffer contains BIRD2 configuration. Scans the first 200
-	lines for BIRD2-specific patterns.
+	Check if a buffer contains BIRD 2 or BIRD 3 configuration. Scans the
+	first 200 lines, accepting strong BIRD-only constructs immediately and
+	requiring two independent signals for otherwise generic constructs.
 
 	Parameters: ~
 		{bufnr?} number Buffer number (default: 0)
@@ -176,12 +183,12 @@ HEALTH CHECK					*bird2-health*
 RELATED PROJECTS					*bird2-related*
 
 BIRD-tm-language-grammar ~
-	TextMate grammar for BIRD2
+	TextMate grammar for BIRD 2 and BIRD 3
 	https://github.com/bird-chinese-community/bird-tm-language-grammar
 
-bird2.vim ~
+BIRD2.vim ~
 	Vim plugin
-	https://github.com/bird-chinese-community/bird2.vim
+	https://github.com/bird-chinese-community/BIRD2.vim
 
 vscode-bird2 ~
 	VS Code extension

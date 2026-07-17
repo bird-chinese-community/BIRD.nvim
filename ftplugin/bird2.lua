@@ -11,13 +11,14 @@ vim.api.nvim_buf_create_user_command(0, "Bird2", function(opts)
   local subcommand = opts.fargs[1]
 
   if subcommand == "version" then
-    print("bird2.nvim 1.0.7")
+    print("bird2.nvim " .. bird2.version)
   elseif subcommand == "check" then
-    require("bird2.health").check()
+    vim.cmd("checkhealth bird2")
   elseif subcommand == "disable" then
     vim.b.bird2_enabled = false
   elseif subcommand == "enable" then
     vim.b.bird2_enabled = true
+    bird2.on_attach(0)
   else
     print("Usage: Bird2 [version|check|enable|disable]")
   end
@@ -29,17 +30,26 @@ end, {
   desc = "BIRD2 plugin commands",
 })
 
--- Define buffer-local key mappings (user can override)
--- Comment/uncomment with <leader>c
-if vim.fn.hasmapto("<Plug>Bird2Comment", "n") == 0 then
-  vim.keymap.set("n", "<leader>c", "<Plug>Bird2Comment", {
-    buffer = 0,
-    desc = "Toggle comment",
-  })
-  vim.keymap.set("x", "<leader>c", "<Plug>Bird2Comment", {
-    buffer = 0,
-    desc = "Toggle comment (visual)",
-  })
+local function mapping_is_available(mode)
+  local mapping = vim.fn.maparg("<leader>c", mode, false, true)
+  return type(mapping) ~= "table" or vim.tbl_isempty(mapping)
+end
+
+-- Define optional buffer-local defaults without replacing user mappings.
+if bird2.config.enabled and vim.b.bird2_enabled ~= false then
+  if mapping_is_available("n") then
+    vim.keymap.set("n", "<leader>c", "<Plug>Bird2Comment", {
+      buffer = 0,
+      desc = "Toggle comment",
+    })
+  end
+
+  if mapping_is_available("x") then
+    vim.keymap.set("x", "<leader>c", "<Plug>Bird2Comment", {
+      buffer = 0,
+      desc = "Toggle comment (visual)",
+    })
+  end
 end
 
 -- LSP configuration suggestions (for future use)

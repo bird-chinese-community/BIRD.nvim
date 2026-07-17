@@ -1,4 +1,5 @@
 # Lua Rocks
+.worktrees/
 luarocks/
 luarocks.*.lua
 

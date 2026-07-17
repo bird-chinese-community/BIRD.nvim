@@ -20,7 +20,7 @@ end
 --- Check if heuristic detection is enabled
 --- @return boolean enabled
 function M.heuristic_enabled()
-  return M.get("heuristic_detect") ~= false
+  return M.get("enabled") ~= false and M.get("heuristic_detect") ~= false
 end
 
 return M
