@@ -116,7 +116,8 @@ This repository can be used directly as a Neovim package directory.
 Every [GitHub Release](https://github.com/bird-chinese-community/BIRD.nvim/releases)
 also includes standalone ZIP and tar.gz archives plus `SHA256SUMS`. Release
 archives exclude the development-only `shared/` submodule and include generated
-`doc/tags`.
+`doc/tags`. See the [release runbook](RELEASING.md) for the verified package
+contract.
 
 </details>
 

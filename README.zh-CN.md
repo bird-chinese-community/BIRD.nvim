@@ -113,7 +113,8 @@ cd BIRD.nvim
 
 每个 [GitHub Release](https://github.com/bird-chinese-community/BIRD.nvim/releases)
 也会附带独立的 ZIP、tar.gz 与 `SHA256SUMS`。Release 压缩包不包含仅供开发使用
-的 `shared/` submodule，并已生成 `doc/tags`。
+的 `shared/` submodule，并已生成 `doc/tags`。完整包体约束与验证步骤参见
+[发布手册](RELEASING.md)。
 
 </details>
 
