@@ -79,6 +79,9 @@ packer.nvim: >
 	:PackerSync
 <
 
+If the existing directory is lowercase bird2.nvim, use that name instead of
+BIRD2.nvim in the first command below.
+
 Native package (rename the old directory and update its remote): >
 	mv ~/.local/share/nvim/site/pack/plugins/start/BIRD2.nvim \
 	  ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim
@@ -93,7 +96,7 @@ Native package (rename the old directory and update its remote): >
 	  submodule update --init --recursive
 <
 
-For an existing checkout using the old directory name: >
+For a manual checkout at another path (the directory name may stay): >
 	git -C /path/to/BIRD2.nvim remote set-url origin \
 	  https://github.com/bird-chinese-community/BIRD.nvim.git
 	git -C /path/to/BIRD2.nvim pull --ff-only

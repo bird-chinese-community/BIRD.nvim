@@ -131,6 +131,8 @@ GitHub 会重定向原 `BIRD2.nvim` 仓库 URL，因此现有 checkout 仍可继
 
 如果现有原生 package checkout 仍使用旧目录名，请重命名目录、更新 remote，再刷新仓库与 submodule：
 
+如果旧版 vimdoc 安装使用小写目录名 `bird2.nvim`，请在第一条命令中用它替换 `BIRD2.nvim`。
+
 ```bash
 mv ~/.local/share/nvim/site/pack/plugins/start/BIRD2.nvim \
   ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim
@@ -143,7 +145,7 @@ git -C ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim \
   submodule update --init --recursive
 ```
 
-如果现有 checkout 仍使用旧目录名，可更新 remote 与 submodule URL：
+对于位于其他路径的手动 checkout，目录名可保持不变；更新 remote 与 submodule URL：
 
 ```bash
 git -C /path/to/BIRD2.nvim remote set-url origin \

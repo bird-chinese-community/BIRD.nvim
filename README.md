@@ -133,6 +133,9 @@ GitHub redirects the former `BIRD2.nvim` repository URL, so existing checkouts c
 For an existing native package checkout, rename its directory, update the
 remote, and then refresh the repository and its submodule:
 
+If an older vimdoc installation uses the lowercase directory `bird2.nvim`,
+substitute that name for `BIRD2.nvim` in the first command.
+
 ```bash
 mv ~/.local/share/nvim/site/pack/plugins/start/BIRD2.nvim \
   ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim
@@ -145,7 +148,8 @@ git -C ~/.local/share/nvim/site/pack/plugins/start/BIRD.nvim \
   submodule update --init --recursive
 ```
 
-For an existing checkout using the old directory name, update its remote and submodule URLs:
+For a manual checkout at another path, the directory name can remain unchanged;
+update its remote and submodule URLs:
 
 ```bash
 git -C /path/to/BIRD2.nvim remote set-url origin \
