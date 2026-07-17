@@ -182,6 +182,9 @@ git -C /path/to/BIRD2.nvim submodule update --init --recursive
 :helptags ~/.local/share/nvim/site/doc
 ```
 
+发布历史参见 [更新日志](CHANGELOG.md)。对于用户可见或需要进入发布说明的变更，
+贡献者应按照 [change fragment 指南](.changeset/README.md) 添加双语片段。
+
 ---
 
 ## 配置

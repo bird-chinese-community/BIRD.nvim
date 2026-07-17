@@ -20,6 +20,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
       - name: Extract version from tag
         id: version
         run: |
@@ -32,12 +37,9 @@ jobs:
       - name: Generate release notes
         id: release_notes
         run: |
-          cat > release_notes.md << 'EOF'
-          ## BIRD.nvim ${{ steps.version.outputs.version }}
-
-          ### Changes
-          See the [commit history](https://github.com/bird-chinese-community/BIRD.nvim/commits/${{ steps.version.outputs.tag_name }}) for details.
-
+          node scripts/changeset.mjs notes \
+            "${{ steps.version.outputs.version }}" > release_notes.md
+          cat >> release_notes.md << 'EOF'
           ### Installation
 
           Using lazy.nvim:
