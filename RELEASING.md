@@ -21,9 +21,9 @@ GitHub 自动生成的源码包主要用于源码审阅。
 
    ```sh
    node scripts/changeset.mjs check-release
-   node scripts/release.mjs check v1.0.13
-   node scripts/release.mjs package v1.0.13 dist
-   node scripts/release.mjs verify v1.0.13 dist
+   node scripts/release.mjs check v1.0.14
+   node scripts/release.mjs package v1.0.14 dist
+   node scripts/release.mjs verify v1.0.14 dist
    ```
 
 3. Merge the reviewed release commit to the default branch.

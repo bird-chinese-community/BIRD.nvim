@@ -5,7 +5,7 @@
 
 local M = {}
 
-M.version = "1.0.13"
+M.version = "1.0.14"
 
 --- Default configuration
 --- @type bird2.Config

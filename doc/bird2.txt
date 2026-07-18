@@ -2,7 +2,7 @@
 
 Author:  BIRD Chinese Community <dev-bird@xmsl.dev>
 License: MPL-2.0
-Version: 1.0.13
+Version: 1.0.14
 
 ==============================================================================
 TABLE OF CONTENTS					*bird2-contents*
@@ -38,7 +38,7 @@ LAZY.NVIM ~
 	Add this plugin spec to your lazy.nvim configuration: >
 		{
 		  "bird-chinese-community/BIRD.nvim",
-		  version = "^1.0.13",
+		  version = "^1.0.14",
 		  lazy = false,
 		  config = function()
 		    require("bird2").setup()
