@@ -1,7 +1,7 @@
 " Vim syntax file
 " Language: BIRD2 Configuration
 " Scope:    BIRD2 config files (bird2, .conf)
-" Version:  1.0.13-20260717
+" Version:  1.0.14-20260719
 " License:  MPL-2.0
 " Author:   BIRD Chinese Community (Alice39s) <dev-bird@xmsl.dev>
 " Based on: grammars/bird2.tmLanguage.json (1.0.13-20260717)

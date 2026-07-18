@@ -77,7 +77,7 @@ Version: [English](README.md) | 简体中文
 ```lua
 {
   "bird-chinese-community/BIRD.nvim",
-  version = "^1.0.13",
+  version = "^1.0.14",
   lazy = false,
   config = function()
     require("bird2").setup()
