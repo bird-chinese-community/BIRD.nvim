@@ -1,3 +1,7 @@
+<p align="center">
+  <img src=".github/assets/icon-256.png" width="128" height="128" alt="BIRD.nvim" />
+</p>
+
 # BIRD.nvim
 
 <div align="center">
